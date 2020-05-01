@@ -74,7 +74,29 @@ function getVideoGame():VideoGame{
 }
 
 function displayGame(myGame:VideoGame):void{
-    //TODO: display video game below the form
+    // display video game below the form
+    let displayDiv = document.getElementById("display");
+
+    // Create <h2> with game title
+    let gameHeading = document.createElement("h2");
+    gameHeading.innerText = myGame.title;
+
+    // Create paragraph with game details
+    let gameInfo = document.createElement("p");
+    let gameMediumDisplay = "You can come buy a physical copy.";
+    if(myGame.isDigitalOnly){
+        gameMediumDisplay = "This is a digital only game."
+    }
+
+    //gameInfo.innerText = myGame.title + " has a rating of " + myGame.rating + ". It costs " + myGame.price + ". It is " + notdigitalDisplay + " digital only";
+
+    gameInfo.innerText = `${myGame.title} has a rating of ${myGame.rating} it costs ${myGame.price}. ${gameMediumDisplay}`;
+
+    // Add <h2> in the <div id="displayDiv">
+    displayDiv.appendChild(gameHeading);
+
+    // add <p> game info
+    displayDiv.appendChild(gameInfo);
 }
 
 // add validation code

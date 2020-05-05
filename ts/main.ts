@@ -29,11 +29,28 @@ function clearAllErrors(){
 
 function addVideoGame(){
     console.log("video game was added");
+
     clearAllErrors();
+
     if(isAllDataValid()){
         let game = getVideoGame();
         displayGame(game);
+    } else {
+        displayRatingsLinks();
     }
+}
+
+function displayRatingsLinks(){
+    let ratingsElements = document.querySelectorAll(".rating-error");
+    for(let i = 0; i < ratingsElements.length; i++){
+        let currElem = <HTMLElement>ratingsElements[i];
+        currElem.onclick = goToRatingsPage;
+        // currElem.innerHTML += "<a target='_blank' href='https://www.esrb.org'> Click here for info</a>";
+    }
+}
+
+function goToRatingsPage(){
+    window.open("https://www.esrb.org", "_blank");
 }
 
 /* doesnt work idk why
@@ -131,9 +148,9 @@ function isAllDataValid(){
     }
 
     let rating = (<HTMLOptionElement>getById("rating")).value;
-    if(rating = ""){
+    if(rating == ""){
         isValid = false;
-        addErrorMessage("You must choose a rating");
+        addErrorMsgWithCustomClass("You must choose a rating", "rating-error");
     }
 
     return isValid;
@@ -145,6 +162,14 @@ function isAllDataValid(){
 function addErrorMessage(errMsg:string) {
     let errSummary = getById("validation-summary");
     let errItem = document.createElement("li");
+    errItem.innerText = errMsg;
+    errSummary.appendChild(errItem);
+}
+
+function addErrorMsgWithCustomClass(errMsg:string, cssClass:string){
+    let errSummary = getById("validation-summary");
+    let errItem = document.createElement("li");
+    errItem.classList.add(cssClass);
     errItem.innerText = errMsg;
     errSummary.appendChild(errItem);
 }
